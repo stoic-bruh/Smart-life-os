@@ -1,6 +1,6 @@
 import React from 'react';
-import { FaTrash, FaLink } from 'react-icons/fa'; // Import the Link icon
-import { Link } from 'react-router-dom'; // Import the router Link component
+import { FaTrash, FaLink } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const TaskItem = ({ task, onUpdateTask, onDeleteTask }) => {
   const isComplete = task.percentage === 100;
@@ -11,7 +11,8 @@ const TaskItem = ({ task, onUpdateTask, onDeleteTask }) => {
   };
 
   return (
-    <li className="task-item-redesigned">
+    // --- THIS IS THE ONLY LINE THAT CHANGED ---
+    <li className={`task-item-redesigned ${task.isPending ? 'pending' : ''}`}>
       <div className="task-info">
         <p className={`task-text ${isComplete ? 'completed' : ''}`}>{task.text}</p>
         <div className="task-meta">
@@ -20,7 +21,6 @@ const TaskItem = ({ task, onUpdateTask, onDeleteTask }) => {
               Due: {new Date(task.due_date).toLocaleDateString()}
             </span>
           )}
-          {/* --- NEW JOURNAL LINK DISPLAY --- */}
           {task.journal_entry_id && (
             <Link to="/journal" className="journal-link">
               <FaLink /> {task.journal_entry_title}

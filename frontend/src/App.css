@@ -434,3 +434,37 @@ form button:hover,
 .journal-list-item .entry-date {
   font-size: 0.7rem;    /* Smaller date font size */
 }
+.link-btn {
+    background: none !important;
+    color: #aaa !important;
+    font-size: 1rem !important;
+}
+
+.link-btn:hover {
+    color: #fff !important;
+}
+
+.linked-entry-display {
+    font-size: 0.9rem;
+    margin: -20px 0 10px 10px;
+    opacity: 0.8;
+}
+
+.journal-link-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.journal-link-item {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.journal-link-item:hover {
+    background-color: #444;
+}
+.task-item-redesigned.pending {
+  opacity: 0.5;
+  pointer-events: none; /* Make it unclickable while saving */
+}

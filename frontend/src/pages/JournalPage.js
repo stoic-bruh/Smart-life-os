@@ -49,6 +49,14 @@ function JournalPage() {
 
   const handleSaveEntry = (entryToSave) => {
     const isUpdating = entryToSave.id;
+
+    if (isUpdating) {
+      // --- Optimistic Update for editing an existing entry ---
+      setEntries(entries.map(e => e.id === entryToSave.id ? entryToSave : e));
+      setView('list');
+      setCurrentEntry(null);
+    }
+
     const method = isUpdating ? 'PUT' : 'POST';
     const url = isUpdating ? `${API_BASE_URL}/api/journal/${entryToSave.id}` : `${API_BASE_URL}/api/journal`;
 
@@ -59,21 +67,23 @@ function JournalPage() {
     })
       .then((res) => res.json())
       .then((savedEntry) => {
-        if (isUpdating) {
-          setEntries(entries.map(e => e.id === savedEntry.id ? savedEntry : e));
-        } else {
+        // For new entries, we add the final saved version from the server.
+        // For updated ones, the UI is already updated, but we could refresh
+        // the data from the server here if we wanted to be extra safe.
+        if (!isUpdating) {
           setEntries([savedEntry, ...entries]);
+          setView('list');
+          setCurrentEntry(null);
         }
-        setView('list');
-        setCurrentEntry(null);
       });
   };
-
+  
   const handleDeleteEntry = (entryId) => {
-    fetch(`${API_BASE_URL}/api/journal/${entryId}`, { method: 'DELETE' })
-      .then(() => {
-        setEntries(entries.filter(e => e.id !== entryId));
-      });
+    // Optimistically remove the entry from the UI immediately
+    setEntries(entries.filter(e => e.id !== entryId));
+
+    // Send the delete request to the server in the background
+    fetch(`${API_BASE_URL}/api/journal/${entryId}`, { method: 'DELETE' });
   };
 
   if (view === 'editor') {
