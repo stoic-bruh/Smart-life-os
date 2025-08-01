@@ -15,7 +15,7 @@ CORS(app)
 SECRET_KEY = os.environ.get('SECRET_KEY')
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-# Smart Database Path (for local dev and production)
+# --- Smart Database Path (for local dev and production) ---
 if 'RENDER' in os.environ:
     db_path = os.path.join(os.environ.get('RENDER_DISK_PATH', '/var/data'), 'app.db')
 else:
@@ -23,6 +23,7 @@ else:
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# --- End Smart Database Path ---
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
