@@ -1,0 +1,436 @@
+/* --- Global & Body Styling --- */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #282c34;
+  color: white;
+}
+
+/* --- Main App Layout --- */
+.app-container {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  height: 100vh;
+}
+
+.sidebar {
+  background-color: #20232a;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.main-content {
+  padding: 25px 40px;
+  overflow-y: auto;
+}
+
+/* --- Typography & Headers --- */
+.sidebar-title {
+  font-size: 1.8rem;
+  margin: 0 0 20px 0;
+  text-align: center;
+}
+
+.main-content h1 {
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* --- Navigation --- */
+.sidebar a {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.sidebar a:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+/* --- General Form & Button Styling --- */
+form button,
+.page-header button,
+.editor-actions button {
+  padding: 10px 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  background-color: #61dafb;
+  color: #20232a;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+form button:hover,
+.page-header button:hover,
+.editor-actions button:hover {
+  background-color: #52b8d3;
+}
+
+/* --- Task Page Styling --- */
+.add-task-form {
+  display: flex;
+  background-color: #333;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 30px;
+  gap: 10px;
+  align-items: center;
+}
+
+.add-task-form input {
+  background: none;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 10px;
+}
+
+.add-task-form input[type="text"] {
+  font-size: 1.1rem;
+  flex-grow: 1;
+}
+
+.add-task-form input[type="date"] {
+  color-scheme: dark;
+  color: #aaa;
+}
+
+.add-task-form input[type="date"]:not(:valid) {
+  color: transparent;
+}
+
+.add-task-form button {
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+/* --- Task Item Styling --- */
+.task-item-redesigned {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background-color: #333;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  list-style-type: none;
+}
+
+.task-info {
+  flex-grow: 1;
+}
+
+.task-text {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.task-text.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.due-date {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin: 5px 0 0 0;
+}
+
+.task-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 200px;
+}
+
+.progress-percentage {
+  font-size: 0.8rem;
+  width: 40px;
+  text-align: right;
+  opacity: 0.8;
+}
+
+/* --- Custom Premium Slider Styling --- */
+.percentage-slider-redesigned {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #444;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+}
+
+.percentage-slider-redesigned::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #61dafb;
+  border-radius: 50%;
+  border: 2px solid #282c34;
+  /* This is the magic line that centers the thumb vertically */
+  margin-top: -6px; 
+}
+
+.percentage-slider-redesigned::-moz-range-thumb {
+  width: 16px; /* Firefox requires slightly different values */
+  height: 16px;
+  background: #61dafb;
+  border-radius: 50%;
+  border: 2px solid #282c34;
+}
+
+/* --- Delete Icon Styling --- */
+.delete-icon {
+  visibility: hidden;
+  opacity: 0;
+  color: #ff6b6b;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.task-item-redesigned:hover .delete-icon {
+  visibility: visible;
+  opacity: 0.7;
+}
+
+.delete-icon:hover {
+  opacity: 1;
+}
+
+/* --- Journal Page Styling --- */
+.journal-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.journal-form input, .journal-form textarea {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background-color: #333;
+  color: #fff;
+  font-family: inherit;
+}
+
+.journal-form textarea {
+  min-height: 200px;
+  resize: vertical;
+}
+
+.journal-entries-list .journal-list-item {
+  background-color: #333;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- Journal Editor Styling --- */
+.journal-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.editor-title {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid #444;
+  outline: none;
+}
+
+.editor-content {
+  flex-grow: 1;
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  resize: none;
+  outline: none;
+  font-family: inherit;
+}
+
+.editor-actions {
+  padding-top: 15px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.editor-actions .cancel-btn {
+  background-color: #444;
+  color: #fff;
+}
+
+.editor-actions .cancel-btn:hover {
+  background-color: #555;
+}
+.add-task-form select {
+  background: none;
+  border: 1px solid #444;
+  border-radius: 6px;
+  color: white;
+  padding: 10px;
+  background-color: #333;
+}
+
+.task-list-section {
+  margin-top: 40px;
+}
+
+.task-list-section h2 {
+  border-bottom: 1px solid #444;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+.sidebar-divider {
+  border: none;
+  border-top: 1px solid #444;
+  margin: 10px 0;
+}
+/* --- Sidebar Dropdown Styling --- */
+.nav-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.arrow {
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  transition: transform 0.2s;
+}
+
+.arrow.right {
+  transform: rotate(-45deg);
+}
+
+.arrow.down {
+  transform: rotate(45deg);
+}
+
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  padding-left: 15px; /* Indent submenu items */
+}
+
+.submenu.open {
+  max-height: 200px; /* Animate to this height */
+}
+
+.submenu a {
+  display: block; /* Make links take full width */
+  font-size: 1rem;
+  padding: 8px 15px;
+}
+/* --- Final UI Adjustments --- */
+
+/* 1. Perfectly center the '+' in the Add Task button */
+.add-task-form button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1; /* Helps with vertical alignment */
+}
+
+/* 2. Prevent the blinking cursor in the sidebar dropdown header */
+.nav-item-header {
+  user-select: none; /* Makes the text non-selectable */
+}
+
+/* 3. Ensure the slider dot (thumb) is centered on the track */
+.percentage-slider-redesigned::-webkit-slider-thumb {
+  /* This negative margin is the key to vertical centering in Chrome/Edge */
+  margin-top: -6px; 
+}
+.task-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 5px;
+}
+
+.journal-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  color: #aaa;
+  text-decoration: none;
+  background-color: #444;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.journal-link:hover {
+  color: #fff;
+  background-color: #555;
+}
+/* --- Final Journal UI Fixes --- */
+
+/* 1. Make the delete icon appear on hover for journal entries */
+.journal-list-item:hover .delete-icon {
+  visibility: visible;
+  opacity: 0.7;
+}
+
+/* --- EXTRA Compact Journal List Item Styling --- */
+
+.journal-list-item {
+  padding: 8px 20px; /* Reduced vertical padding */
+  margin-bottom: 8px; /* Tighter spacing between items */
+}
+
+.journal-list-item h2 {
+  font-size: 1rem;    /* Smaller title font size */
+  margin-bottom: 2px;
+}
+
+.journal-list-item .entry-date {
+  font-size: 0.7rem;    /* Smaller date font size */
+}
