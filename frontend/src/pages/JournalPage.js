@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaTrash } from 'react-icons/fa';
+import { apiFetch } from '../api';
 import '../App.css';
-
-const API_BASE_URL = 'https://smart-life-os.onrender.com';
 
 const JournalEditor = ({ entry, onSave, onCancel }) => {
   const [title, setTitle] = useState(entry ? entry.title : '');
@@ -42,34 +41,29 @@ function JournalPage() {
   const [currentEntry, setCurrentEntry] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/journal`)
+    apiFetch('/api/journal')
       .then((res) => res.json())
-      .then((data) => setEntries(data.entries));
+      .then((data) => setEntries(data.entries || []));
   }, []);
 
   const handleSaveEntry = (entryToSave) => {
     const isUpdating = entryToSave.id;
 
     if (isUpdating) {
-      // --- Optimistic Update for editing an existing entry ---
       setEntries(entries.map(e => e.id === entryToSave.id ? entryToSave : e));
       setView('list');
       setCurrentEntry(null);
     }
 
     const method = isUpdating ? 'PUT' : 'POST';
-    const url = isUpdating ? `${API_BASE_URL}/api/journal/${entryToSave.id}` : `${API_BASE_URL}/api/journal`;
+    const url = isUpdating ? `/api/journal/${entryToSave.id}` : '/api/journal';
 
-    fetch(url, {
+    apiFetch(url, {
       method: method,
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(entryToSave),
     })
       .then((res) => res.json())
       .then((savedEntry) => {
-        // For new entries, we add the final saved version from the server.
-        // For updated ones, the UI is already updated, but we could refresh
-        // the data from the server here if we wanted to be extra safe.
         if (!isUpdating) {
           setEntries([savedEntry, ...entries]);
           setView('list');
@@ -77,13 +71,10 @@ function JournalPage() {
         }
       });
   };
-  
-  const handleDeleteEntry = (entryId) => {
-    // Optimistically remove the entry from the UI immediately
-    setEntries(entries.filter(e => e.id !== entryId));
 
-    // Send the delete request to the server in the background
-    fetch(`${API_BASE_URL}/api/journal/${entryId}`, { method: 'DELETE' });
+  const handleDeleteEntry = (entryId) => {
+    setEntries(entries.filter(e => e.id !== entryId));
+    apiFetch(`/api/journal/${entryId}`, { method: 'DELETE' });
   };
 
   if (view === 'editor') {
