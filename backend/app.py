@@ -48,17 +48,11 @@ class Task(db.Model):
     journal_entry_id = db.Column(db.Integer, db.ForeignKey('journal_entry.id'), nullable=True)
     journal_entry = db.relationship('JournalEntry', backref='tasks')
 
-    def __repr__(self):
-        return f'<Task {self.id}: {self.text}>'
-
 class JournalEntry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
-
-    def __repr__(self):
-        return f'<JournalEntry {self.id}: {self.title}>'
 
 # --- API ROUTES (TASKS) ---
 @app.route("/api/tasks", methods=['GET'])
@@ -77,6 +71,7 @@ def get_tasks():
         tasks_data.append(task_info)
     return jsonify({"tasks": tasks_data})
 
+# ... (all other routes remain the same)
 @app.route("/api/tasks", methods=['POST'])
 @require_secret_key
 def add_task():
